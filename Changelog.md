@@ -1,6 +1,50 @@
 Escape to Andromeda Changelog
 =============================
 
+Version 3.6.1 (unreleased)
+--------------
+
+### Bugfixes ###
+* replace remaining smarty templates with twig
+
+Version 3.6 (round 20)
+--------------
+### Features ###
+
+* added info line 
+* added the option to switch the main planet once
+* added option to mark ships as tradeable
+* added work optimize functionality for building defense
+
+### Bugfixes ###
+* fixed background images for large screen sizes
+* fixed the mouse over for the food cost on the defense page 
+* deactivated buildings can no longer be demolished
+* emp attack now only targets buildings level 1 or higher
+* fixed several compatibility issues with Mysql5.7
+* replaced all game and most of the admin smarty templates with twig
+ 
+
+Version 3.5.24
+--------------
+### Features ###
+
+* new ship-images
+
+### Bugfixes ###
+
+* fixed wrong production display at overview
+
+Version 3.5.23
+--------------
+### Features ###
+
+* pumpkin cruiser added
+
+### Bugfixes ###
+
+* no more annoying scrollbar in chat after long messages
+
 Version 3.5.22 (round18)
 --------------
 

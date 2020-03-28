@@ -63,7 +63,7 @@
 	}
 	elseif (isset($_GET['setup_sx']) && isset($_GET['setup_sy']) && $_GET['setup_sx']>0 && $_GET['setup_sy']>0 && $_GET['setup_sx']<=$sx_num && $_GET['setup_sy']<=$sy_num)
 	{
-		if ($pid = PlanetManager::getFreePlanet($_GET['setup_sx'],$_GET['setup_sy'],$_GET['filter_p'],$_GET['filter_s']))
+		if ($pid = PlanetManager::getFreePlanet($_GET['setup_sx'],$_GET['setup_sy'],array_key_exists('filter_p',$_GET) ? $_GET['filter_p'] : null,array_key_exists('filter_s',$_GET) ? $_GET['filter_s'] : null))
 		{
 			$mode = "checkplanet";
 		}		
@@ -133,7 +133,13 @@
 		echo "</td></tr>";		
 		echo "<tr><th>Ansicht:</th><td style=\"background:#000;text-align:center;\"><img src=\"".$tp->imagePath("m")."\" style=\"border:none;\" alt=\"planet\" /></td></tr>
 		</table>";
-
+		echo "<table class='tb'>
+		<tr>
+		<td>
+		Du kannst einmal während des Spiels eine andere Kolonie zum Hauptplaneten bestimmen.
+		</td>
+		</tr>
+		</table>";
         tableStart("Filter",300);
         echo "<tr>
 			<th>Sonnentyp:</th>
@@ -156,8 +162,8 @@
 		{
             $selected = 0;
 
-            if ($_GET['filter_s'] == $sol['sol_type_id']) {
-                $selected = 'selected';
+            if ((array_key_exists('filter_s',$_GET) ? $_GET['filter_s'] : null) == $sol['sol_type_id']) {
+				$selected = 'selected';
             }
 			echo "<option value=\"".$sol['sol_type_id']."\"";
 			echo "$selected>".$sol['sol_type_name']."</option>";
@@ -186,7 +192,7 @@
 		{
 		    $selected = 0;
 
-		    if ($_GET['filter_p'] == $planets['type_id']) {
+		    if ((array_key_exists('filter_p',$_GET) ? $_GET['filter_p'] : null) == $planets['type_id']) {
 		        $selected = 'selected';
             }
 

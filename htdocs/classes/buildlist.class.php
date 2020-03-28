@@ -103,7 +103,24 @@
 			$this->items = array();
 			$this->count = 0;
 
-			if ($load==2)
+			if ($load==3)
+			{
+				$sql = "SELECT
+							l.*,
+							i.*
+						FROM
+							buildlist l
+						INNER JOIN
+							buildings i
+						ON
+							l.buildlist_building_id = i.building_id
+							AND l.buildlist_entity_id='".$this->entityId."'
+							AND l.buildlist_current_level>='0'
+						ORDER BY
+							i.building_order,
+							i.building_name;";
+			}
+			elseif ($load==2)
 			{
 				$sql = "SELECT
 							l.*,
@@ -120,7 +137,7 @@
 							i.building_order,
 							i.building_name;";
 			}
-			else
+			else //this is for the cases $load==0 and $load==1
 			{
 				$sql = "SELECT
 							l.*,
@@ -500,33 +517,40 @@
 		function checkDemolishable($bid)
 		{
 			// check all the buildings
-			if (!$this->isUnderConstruction())
-			{
-				global $cu,$cp;
-				if ($this->entity == null)
-				{
-					if ($cp->id != $this->entityId)
-						$this->entity = Entity::createFactoryById($this->entityId);
-					else
-						$this->entity = &$cp;
-				}
+            $this->load(3);
 
-				$cst = $this->items[$bid]->getDemolishCosts();
-				// Check costs
-				if ($cst['costs0'] <= $this->entity->getRes1(0)
-						&& $cst['costs1'] <= $this->entity->getRes1(1)
-						&& $cst['costs2'] <= $this->entity->getRes1(2)
-						&& $cst['costs3'] <= $this->entity->getRes1(3)
-						&& $cst['costs4'] <= $this->entity->getRes1(4))
-				{
-					return true;
-				}
-				else
-					$this->errorMsg = "Zuwenig Rohstoffe vorhanden!";
+            if(!$this->getDeactivated($bid)) {
+                if (!$this->isUnderConstruction())
+                {
+                    global $cu,$cp;
+                    if ($this->entity == null)
+                    {
+                        if ($cp->id != $this->entityId)
+                            $this->entity = Entity::createFactoryById($this->entityId);
+                        else
+                            $this->entity = &$cp;
+                    }
+
+                    $cst = $this->items[$bid]->getDemolishCosts();
+                    // Check costs
+                    if ($cst['costs0'] <= $this->entity->getRes1(0)
+                        && $cst['costs1'] <= $this->entity->getRes1(1)
+                        && $cst['costs2'] <= $this->entity->getRes1(2)
+                        && $cst['costs3'] <= $this->entity->getRes1(3)
+                        && $cst['costs4'] <= $this->entity->getRes1(4))
+                    {
+                        return true;
+                    }
+                    else
+                        $this->errorMsg = "Zuwenig Rohstoffe vorhanden!";
+                }
+                else
+                    $this->errorMsg = "Es wird gerade an einem Geb&auml;ude gebaut!";
+                return false;
 			}
-			else
-				$this->errorMsg = "Es wird gerade an einem Geb&auml;de gebaut!";
-			return false;
+			else {
+                $this->errorMsg = "Das Geb&auml;ude wurde deaktiviert!";
+			}
 		}
 
 		public function requirementsPassed($bid=0)

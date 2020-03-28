@@ -49,11 +49,6 @@
 		define('IMAGE_DIR', RELATIVE_ROOT."images");
 	}
 
-	// Smarty Path
-	define('SMARTY_DIR', __DIR__ . '/../libs/smarty/');
-	define('SMARTY_TEMPLATE_DIR', CACHE_ROOT."/smarty_templates");
-	define('SMARTY_COMPILE_DIR', CACHE_ROOT."/smarty_compile");
-
 	// xAjax
 	define('XAJAX_DIR', RELATIVE_ROOT."libs/xajax");
 	define('XAJAX_DEBUG', false);
@@ -145,8 +140,8 @@
 	define('CHAT_ONCLICK', "parent.top.location='chatframe.php';");
 
 	// Teamspeak
-	define('TEAMSPEAK_URL', "http://ts.etoa.ch");
-	define('TEAMSPEAK_ONCLICK', "window.open('".TEAMSPEAK_URL."','ts','width=800,height=600,scrollbars=yes');");
+	define('TEAMSPEAK_URL', "https://discord.gg/7d2ndEU");
+	define('TEAMSPEAK_ONCLICK', "window.open('".TEAMSPEAK_URL."','_blank');");
 
 	// Game-Rules
 	define('RULES_URL', 'http://www.etoa.ch/regeln');
